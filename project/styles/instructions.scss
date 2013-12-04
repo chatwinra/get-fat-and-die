@@ -1,0 +1,10 @@
+.instructions-wrapper {
+	position: relative;
+	right: 45em;
+	bottom: 0;
+	width: 100%;
+	height: 4em;
+	padding: 1em;
+	background: url(assets/images/gregormendel.jpg) no-repeat 50% 50%;
+	@include border-box;
+}

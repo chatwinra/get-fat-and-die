@@ -1,0 +1,527 @@
+@media -sass-debug-info{filename{}line{font-family:\000033}}
+body {
+  font-family: 'Varela Round', 'Arial', 'serif';
+  font-size: 16px;
+  color: #333;
+  background: url(assets/images/grid2x.png);
+  background-size: 200px 200px;
+  margin: 0;
+  min-width: 20em;
+  line-height: 1.5;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000314}}
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Dosis', sans-serif;
+  margin: 0 0 0.4em 0;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000319}}
+h1 {
+  font-size: 3em;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000323}}
+h2 {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000327}}
+h3 {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000333}}
+p {
+  margin: 0 0 1em 0;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000337}}
+p.instructions {
+  margin: 0 0 1em 0;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000341}}
+a {
+  color: #3365e2;
+  text-decoration: none;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000346}}
+button, .mate {
+  border: 1px solid #777777;
+  background: #386BF5;
+  color: white;
+  padding: 0.3em;
+  cursor: pointer;
+  border-radius: 0.3em;
+  display: block;
+  margin: 0 auto 0.5em auto;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000358}}
+.mate {
+  display: inline;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000364}}
+.info {
+  background-color: #eee;
+  border: 1px solid #aaa;
+  border-radius: 0.2em;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  padding: 1em 2em;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/layout\.scss}line{font-family:\000031}}
+.wrap {
+  position: relative;
+  max-width: 70em;
+  margin: 0 auto 2em auto;
+  padding: 2em 0 0 0;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/_base\.scss}line{font-family:\0000324}}
+.wrap:before, .wrap:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/_base\.scss}line{font-family:\0000329}}
+.wrap:after {
+  clear: both;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/_base\.scss}line{font-family:\0000333}}
+.wrap {
+  *zoom: 1;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/layout\.scss}line{font-family:\0000314}}
+.foodGrid {
+  position: relative;
+  width: 65%;
+  height: 30em;
+  float: right;
+  padding: 0 0 0 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/layout\.scss}line{font-family:\0000322}}
+.foodItem {
+  position: relative;
+  border: 1px solid #333;
+  border-radius: 0.2em;
+  text-align: left;
+  background-color: #FEFCFF;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  position: relative;
+  width: 10em;
+  height: 10em;
+  float: left;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/layout\.scss}line{font-family:\0000336}}
+.foodItem.selected {
+  background-color: #85A2F9;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/layout\.scss}line{font-family:\0000344}}
+.instructions-info {
+  position: relative;
+  width: 30%;
+  float: left;
+  text-align: left;
+  padding: 0.5em 0.1em 0 0.5em;
+  border: 1px solid #333;
+  background-color: #C6F5CD;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/layout\.scss}line{font-family:\0000355}}
+.instructions-info .image {
+  height: 50%;
+  width: 30%;
+  float: left;
+  padding: 0 0.5em 0 0;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/layout\.scss}line{font-family:\0000362}}
+.instructions-info h2 {
+  position: absolute;
+  top: -2em;
+  width: 100%;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/layout\.scss}line{font-family:\0000368}}
+.instructions-info p {
+  margin: 0 0 1em 0;
+  padding-right: 0.5em;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/layout\.scss}line{font-family:\0000374}}
+.instructions-info buttonLeft {
+  border: 1px solid #777777;
+  background: #386BF5;
+  color: white;
+  padding: 0.3em;
+  cursor: pointer;
+  border-radius: 0.3em;
+  display: block;
+  margin: 0 auto 0.5em auto;
+  width: 40%;
+  float: left;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/layout\.scss}line{font-family:\0000386}}
+.instructions-info buttonRight {
+  border: 1px solid #777777;
+  background: #386BF5;
+  color: white;
+  padding: 0.3em;
+  cursor: pointer;
+  border-radius: 0.3em;
+  display: block;
+  margin: 0 auto 0.5em auto;
+  width: 40%;
+  float: right;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/wildlife\.scss}line{font-family:\000031}}
+.nature {
+  position: relative;
+  border: 1px solid #333;
+  border-radius: 0.2em;
+  width: 12em;
+  height: 12em;
+  text-align: left;
+  background-color: #FEFCFF;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/wildlife\.scss}line{font-family:\0000311}}
+.mother .nature {
+  margin: 0 1em 0 auto;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/wildlife\.scss}line{font-family:\0000315}}
+.father .nature {
+  margin: 0 auto 0 0.7em;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/wildlife\.scss}line{font-family:\0000319}}
+.offspring .nature {
+  margin: 0 auto 0 2em;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/wildlife\.scss}line{font-family:\0000325}}
+.nature-intro {
+  position: relative;
+  float: right;
+  border: 1px solid #333;
+  border-radius: 0.2em;
+  width: 12em;
+  height: 12em;
+  text-align: left;
+  background-color: #FEFCFF;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  margin-right: 22%;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/wildlife\.scss}line{font-family:\0000338}}
+.genotype-covered {
+  height: 152%;
+  background: url(assets/nature/peaplant.jpg) no-repeat 50% 50%;
+  background-size: contain;
+  opacity: 1;
+  -webkit-transition: opacity 0.4s;
+  -moz-transition: opacity 0.4s;
+  -ms-transition: opacity 0.4s;
+  -o-transition: opacity 0.4s;
+  transition: opacity 0.4s;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/wildlife\.scss}line{font-family:\0000350}}
+.genotype-covered.faded {
+  opacity: 0.5;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/wildlife\.scss}line{font-family:\0000355}}
+.genotype-uncovered {
+  height: 152%;
+  position: relative;
+  padding: 2em 0.5em 8em 0.5em;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/wildlife\.scss}line{font-family:\0000362}}
+.name {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  line-height: 1;
+  padding: 0.5em;
+  text-align: center;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/wildlife\.scss}line{font-family:\0000374}}
+.genes {
+  position: absolute;
+  width: 100%;
+  top: 10em;
+  left: 0;
+  line-height: 1;
+  padding: 0.5em;
+  text-align: center;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/wildlife\.scss}line{font-family:\0000387}}
+.details {
+  width: 100%;
+  height: 100%;
+  padding: 0.5em 0;
+  border-top: 1px solid #eee;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/wildlife\.scss}line{font-family:\0000395}}
+.details p {
+  font-size: 0.8em;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/wildlife\.scss}line{font-family:\00003100}}
+.mugshot {
+  height: 7.5em;
+  margin: 1em 0 0.5em 1em;
+  width: 80%;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/wildlife\.scss}line{font-family:\00003106}}
+.fields {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  list-style-type: none;
+  margin: 0;
+  padding: 0.5em;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/wildlife\.scss}line{font-family:\00003117}}
+.field {
+  background-color: #c6d4f7;
+  color: #3365e2;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.5em;
+  margin: 0 0 0.5em 0;
+  border-radius: 0.1em;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/wildlife\.scss}line{font-family:\00003126}}
+.field:last-child {
+  margin: 0;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/wildlife\.scss}line{font-family:\00003130}}
+.field.selected {
+  background-color: #3365e2;
+  color: white;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/wildlife\.scss}line{font-family:\00003136}}
+.stat {
+  float: right;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/footer\.scss}line{font-family:\000033}}
+footer {
+  background-color: #FFFFFF;
+  margin: 0;
+  padding: 1em;
+  background: white;
+  background-size: auto 100%;
+  clear: all;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/_base\.scss}line{font-family:\0000324}}
+footer:before, footer:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/_base\.scss}line{font-family:\0000329}}
+footer:after {
+  clear: both;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/_base\.scss}line{font-family:\0000333}}
+footer {
+  *zoom: 1;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/footer\.scss}line{font-family:\0000312}}
+footer p {
+  font-size: 0.8em;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/footer\.scss}line{font-family:\0000317}}
+.footer-smallprint {
+  color: #DBDBDB;
+  font-size: 0.8em;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/pending\.scss}line{font-family:\000033}}
+.pending-wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 220%;
+  height: 100%;
+  padding: 1em;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  z-index: 2;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/pending\.scss}line{font-family:\0000314}}
+.pending {
+  position: relative;
+  top: 50%;
+  background-color: #3365e2;
+  color: white;
+  -webkit-transform: translate(0, -50%);
+  -moz-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  -o-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  padding: 1em 3em;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid white;
+  border-radius: 0.2em;
+  box-shadow: 0 0 4px white;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/instructions\.scss}line{font-family:\000031}}
+.instructions-wrapper {
+  position: relative;
+  right: 45em;
+  bottom: 0;
+  width: 100%;
+  height: 4em;
+  padding: 1em;
+  background: url(assets/images/gregormendel.jpg) no-repeat 50% 50%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/dialog\.scss}line{font-family:\000031}}
+.dialog-wrapper {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  text-align: center;
+  z-index: 2;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/dialog\.scss}line{font-family:\0000311}}
+.dialog {
+  margin: 0 auto;
+  display: inline-block;
+  -webkit-transform: translate(0, -95%);
+  -moz-transform: translate(0, -95%);
+  -ms-transform: translate(0, -95%);
+  -o-transform: translate(0, -95%);
+  transform: translate(0, -95%);
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/dialog\.scss}line{font-family:\0000320}}
+.dialog .image {
+  height: 25%;
+  width: 25%;
+  float: left;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/whose-turn\.scss}line{font-family:\000031}}
+.whose-turn {
+  position: absolute;
+  top: 0;
+  left: 50%;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/whose-turn\.scss}line{font-family:\000037}}
+.whose-turn-info {
+  position: absolute;
+  text-align: center;
+  top: 0.3em;
+  width: 6em;
+  left: -3em;
+  line-height: 1.2;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/whose-turn\.scss}line{font-family:\0000316}}
+.whose-turn-player, .whose-turn-opponent {
+  position: absolute;
+  font-size: 2em;
+  opacity: 0.1;
+  -webkit-transition: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  -ms-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/whose-turn\.scss}line{font-family:\0000327}}
+.whose-turn-player.active, .whose-turn-opponent.active {
+  opacity: 1;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/whose-turn\.scss}line{font-family:\0000332}}
+.whose-turn-player {
+  left: -3em;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/whose-turn\.scss}line{font-family:\0000336}}
+.whose-turn-opponent {
+  right: -3em;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/header\.scss}line{font-family:\000033}}
+header {
+  background-color: white;
+  padding: 0.5em 1em;
+  margin: 0 0 1em 0;
+  border-bottom: 1px solid #999;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/header\.scss}line{font-family:\0000310}}
+header h1 {
+  font-size: 2em;
+  line-height: 1;
+  margin: 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/header\.scss}line{font-family:\0000317}}
+.nav {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  display: block;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/richardchatwin\/Sites\/get-fat-and-die\/get-fat-and-die\/Project\/styles\/header\.scss}line{font-family:\0000323}}
+.nav img {
+  height: 2em;
+}
