@@ -71,6 +71,14 @@ module.exports = function(grunt) {
 			csv: {
 				url: 'https://docs.google.com/spreadsheet/pub?key=0AkdKGjqWcdvVdGFsRFg3dDNpMXltZEhtVDN2aGZDWWc&output=csv',
 				dest: 'Project/src/food.csv'
+			},
+			csv2: {
+				url:'https://docs.google.com/spreadsheet/pub?key=0AkdKGjqWcdvVdGFsRFg3dDNpMXltZEhtVDN2aGZDWWc&single=true&gid=1&output=csv',
+				dest: 'Project/src/diseases.csv'
+			},
+			csv3: {
+				url:'https://docs.google.com/spreadsheet/pub?key=0AkdKGjqWcdvVdGFsRFg3dDNpMXltZEhtVDN2aGZDWWc&single=true&gid=2&output=csv',
+				dest: 'Project/src/upgrades.csv'
 			}
 		},
 	});

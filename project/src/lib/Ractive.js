@@ -1,4 +1,4 @@
-/*! Ractive - v0.3.7 - 2013-10-13
+/*! Ractive - v0.3.7 - 2013-10-14
 * Next-generation DOM manipulation
 
 * http://ractivejs.org
@@ -1264,12 +1264,6 @@ getComponentConstructor = function ( root, name ) {
 
 		for ( i=start; i<end; i+=1 ) {
 			fragment = section.fragments[i];
-
-			// If this fragment was rendered with innerHTML, we have nothing to do
-			// TODO a less hacky way of determining this
-			if ( fragment.html ) {
-				continue;
-			}
 
 			oldIndex = i - by;
 			newIndex = i;
@@ -2564,87 +2558,23 @@ stripStandalones = function ( tokens ) {
 
 	proto.animate = function ( keypath, to, options ) {
 		
-		var k, animation, animations, easing, duration, step, complete, makeValueCollector, currentValues, collectValue, dummy, dummyOptions;
+		var k, animation, animations;
 
 		// animate multiple keypaths
 		if ( typeof keypath === 'object' ) {
 			options = to || {};
-			easing = options.easing;
-			duration = options.duration;
-
 			animations = [];
-
-			// we don't want to pass the `step` and `complete` handlers, as they will
-			// run for each animation! So instead we'll store the handlers and create
-			// our own...
-			step = options.step;
-			complete = options.complete;
-
-			if ( step || complete ) {
-				currentValues = {};
-
-				options.step = null;
-				options.complete = null;
-
-				makeValueCollector = function ( keypath ) {
-					return function ( t, value ) {
-						currentValues[ keypath ] = value;
-					};
-				};
-			}
-			
 
 			for ( k in keypath ) {
 				if ( hasOwn.call( keypath, k ) ) {
-					if ( step || complete ) {
-						collectValue = makeValueCollector( k );
-						options = {
-							easing: easing,
-							duration: duration
-						};
-
-						if ( step ) {
-							options.step = collectValue;
-						}
-
-						if ( complete ) {
-							options.complete = collectValue;
-						}
-					}
-
 					animations[ animations.length ] = animate( this, k, keypath[k], options );
 				}
-			}
-
-			if ( step || complete ) {
-				dummyOptions = {
-					easing: easing,
-					duration: duration
-				};
-
-				if ( step ) {
-					dummyOptions.step = function ( t ) {
-						step( t, currentValues );
-					};
-				}
-
-				if ( complete ) {
-					dummyOptions.complete = function ( t ) {
-						complete( t, currentValues );
-					};
-				}
-
-				animations[ animations.length ] = dummy = animate( this, null, null, dummyOptions );
 			}
 
 			return {
 				stop: function () {
 					while ( animations.length ) {
 						animations.pop().stop();
-					}
-
-					if ( dummy ) {
-						dummy.stop();
 					}
 				}
 			};
@@ -2669,9 +2599,7 @@ stripStandalones = function ( tokens ) {
 	animate = function ( root, keypath, to, options ) {
 		var easing, duration, animation, i, from;
 
-		if ( keypath !== null ) {
-			from = root.get( keypath );
-		}
+		from = root.get( keypath );
 		
 		// cancel any existing animation
 		// TODO what about upstream/downstream keypaths?
@@ -2725,8 +2653,6 @@ stripStandalones = function ( tokens ) {
 			root: root,
 			duration: duration,
 			easing: easing,
-
-			// TODO wrap callbacks if necessary, to use instance as context
 			step: options.step,
 			complete: options.complete
 		});
@@ -3353,7 +3279,7 @@ proto.link = function ( keypath ) {
 		var observers = [], k;
 
 		if ( typeof keypath === 'object' ) {
-			options = callback;
+			options = callback || {};
 
 			for ( k in keypath ) {
 				if ( hasOwn.call( keypath, k ) ) {
@@ -3371,7 +3297,7 @@ proto.link = function ( keypath ) {
 			};
 		}
 
-		return observe( this, keypath, callback, options );
+		return observe( this, keypath, callback, options || {} );
 	};
 
 	observe = function ( root, keypath, callback, options ) {
@@ -3379,7 +3305,7 @@ proto.link = function ( keypath ) {
 
 		observer = new Observer( root, keypath, callback, options );
 
-		if ( !options || options.init !== false ) {
+		if ( options.init !== false ) {
 			observer.update();
 		}
 
@@ -3397,14 +3323,14 @@ proto.link = function ( keypath ) {
 		this.root = root;
 		this.keypath = keypath;
 		this.callback = callback;
-		this.defer = options && options.defer;
+		this.defer = options.defer;
 		
 		// Observers are notified before any DOM changes take place (though
 		// they can defer execution until afterwards)
 		this.priority = 0;
 
 		// default to root as context, but allow it to be overridden
-		this.context = ( options && options.context ? options.context : root );
+		this.context = options.context || root;
 	};
 
 	Observer.prototype = {
@@ -4392,133 +4318,6 @@ easing = {
 		return ( 0.5 * ( Math.pow( ( pos - 2 ), 3 ) + 2 ) );
 	}
 };
-eventDefinitions.drag = function ( node, fire ) {
-	var mousedownHandler, touchstartHandler;
-
-	mousedownHandler = function () {
-		// TODO
-	};
-
-	node.addEventListener( 'mousedown', mousedownHandler, false );
-
-
-	touchstartHandler = function ( event ) {
-		var finger, touch, startX, startY, lastX, lastY, touchmoveHandler, touchendHandler, end;
-
-		if ( event.touches.length !== 1 ) {
-			return; // only bothering with one finger touches
-		}
-
-		touch = event.touches[0];
-		finger = touch.identifier;
-
-		startX = lastX = touch.clientX;
-		startY = lastY = touch.clientY;
-
-		fire({
-			node: node,
-			original: event,
-			
-			start: true,
-			x: startX,
-			y: startY,
-			dx: 0,
-			dy: 0,
-			tx: 0,
-			ty: 0
-		});
-
-
-		touchmoveHandler = function ( event ) {
-			var i, touch, x, y;
-
-			i = event.changedTouches.length;
-			while ( i-- ) {
-				if ( event.changedTouches[i].identifier === finger ) {
-					touch = event.changedTouches[i];
-					break;
-				}
-			}
-
-			if ( !touch ) {
-				return;
-			}
-
-			x = touch.clientX;
-			y = touch.clientY;
-
-			fire({
-				node: node,
-				original: event,
-
-				move: true,
-				x: x,
-				y: y,
-				dx: x - lastX,
-				dy: y - lastY,
-				tx: x - startX,
-				ty: y - startY
-			});
-
-			lastX = x;
-			lastY = y;
-		};
-
-
-		touchendHandler = function ( event ) {
-			var i, touch, x, y;
-
-			i = event.changedTouches.length;
-			while ( i-- ) {
-				if ( event.changedTouches[i].identifier === finger ) {
-					touch = event.changedTouches[i];
-					break;
-				}
-			}
-
-			if ( !touch ) {
-				return;
-			}
-
-			x = touch.clientX;
-			y = touch.clientY;
-
-			fire({
-				node: node,
-				original: event,
-
-				end: true,
-				x: x,
-				y: y,
-				dx: x - lastX,
-				dy: y - lastY,
-				tx: x - startX,
-				ty: y - startY
-			});
-
-			end();
-		};
-
-		end = function () {
-			node.removeEventListener( 'touchmove', touchmoveHandler, false );
-			node.removeEventListener( 'touchend', touchendHandler, false );
-			node.removeEventListener( 'touchcancel', touchendHandler, false );
-		};
-
-		node.addEventListener( 'touchmove', touchmoveHandler, false );
-		node.addEventListener( 'touchend', touchendHandler, false );
-		node.addEventListener( 'touchcancel', touchendHandler, false );
-	};
-
-	node.addEventListener( 'touchstart', touchstartHandler );
-
-	return {
-		teardown: function () {
-			node.removeEventListener( 'mousedown', mousedownHandler, false );
-			node.removeEventListener( 'touchstart', touchstartHandler, false );
-		}
-	};
-};
 eventDefinitions.hover = function ( node, fire ) {
 	var mouseoverHandler, mouseoutHandler;
 
@@ -4772,102 +4571,6 @@ eventDefinitions.tap = function ( node, fire ) {
 	};
 };
 
-(function () {
-
-	if ( !doc ) {
-		return;
-	}
-
-	// Normalised cross-browser wheel event
-	// ====================================
-
-	// Is the standard wheel event supported?
-	if ( 'onwheel' in doc.createElement( 'div' ) ) {
-		eventDefinitions.wheel = function ( node, fire ) {
-			var wheelHandler;
-
-			wheelHandler = function ( event ) {
-				fire({
-					node: node,
-					original: event,
-					
-					// delta in pixels
-					dx: 40 * event.deltaX,
-					dy: 40 * event.deltaY,
-					dz: 40 * event.deltaZ
-				});
-			};
-
-			node.addEventListener( 'wheel', wheelHandler, false );
-
-			return {
-				teardown: function () {
-					node.removeEventListener( 'wheel', wheelHandler, false );
-				}
-			};
-		};
-
-		return;
-	}
-
-
-	// Deprecated mousewheel event? Chrome etc
-	if ( doc.onmousewheel !== undefined ) {
-		eventDefinitions.wheel = function ( node, fire ) {
-			var mousewheelHandler;
-
-			mousewheelHandler = function ( event ) {
-				fire({
-					node: node,
-					original: event,
-					
-					dx: event.wheelDeltaX || 0,
-					dy: event.wheelDeltaY,
-					dz: 0
-				});
-			};
-
-			node.addEventListener( 'mousewheel', mousewheelHandler, false );
-
-			return {
-				teardown: function () {
-					node.removeEventListener( 'mousewheel', mousewheelHandler, false );
-				}
-			};
-		};
-
-		return;
-	}
-
-
-	// Ancient Firefox - DOMMouseScroll & MozMousePixelScroll
-	eventDefinitions.wheel = function ( node, fire ) {
-		var handler;
-
-		handler = function ( event ) {
-			fire({
-				node: node,
-				original: event,
-
-				dx: 0,
-				dy: event.detail,
-				dz: 0
-			});
-		};
-
-		node.addEventListener( 'DOMMouseScroll', handler, false );
-		node.addEventListener( 'MozMousePixelScroll', handler, false );
-
-		return {
-			teardown: function () {
-				node.removeEventListener( 'DOMMouseScroll', handler, false );
-				node.removeEventListener( 'MozMousePixelScroll', handler, false );
-			}
-		};
-	};
-
-
-}());
 (function () {
 
 	var fillGaps,
@@ -5816,18 +5519,14 @@ Animation = function ( options ) {
 
 Animation.prototype = {
 	tick: function () {
-		var elapsed, t, value, timeNow, index, keypath;
-
-		keypath = this.keypath;
+		var elapsed, t, value, timeNow, index;
 
 		if ( this.running ) {
 			timeNow = Date.now();
 			elapsed = timeNow - this.startTime;
 
 			if ( elapsed >= this.duration ) {
-				if ( keypath !== null ) {
-					this.root.set( keypath, this.to );
-				}
+				this.root.set( this.keypath, this.to );
 
 				if ( this.step ) {
 					this.step( 1, this.to );
@@ -5847,24 +5546,22 @@ Animation.prototype = {
 				this.root._animations.splice( index, 1 );
 
 				this.running = false;
-				return false; // remove from the stack
+				return false;
 			}
 
 			t = this.easing ? this.easing ( elapsed / this.duration ) : ( elapsed / this.duration );
+			value = this.interpolator( t );
 
-			if ( keypath !== null ) {
-				value = this.interpolator( t );
-				this.root.set( keypath, value );
-			}
+			this.root.set( this.keypath, value );
 
 			if ( this.step ) {
 				this.step( t, value );
 			}
 
-			return true; // keep in the stack
+			return true;
 		}
 
-		return false; // remove from the stack
+		return false;
 	},
 
 	stop: function () {

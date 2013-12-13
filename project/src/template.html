@@ -9,27 +9,25 @@
 <!--these instructions will progress as the player goes through different game stages-->
 
 				<div class='instructions-info' intro='fade'>
+					<h3>Time Per Year</h3>
 					{{#timer}}
 					{{mins}} : {{secs}} : 0{{tenths}} {{name}}
 					{{/timer}}
-
-
-
-					<img class='image' src='assets/images/gregormendel.jpg'>
-					<p>
-					{{#instructions}} 
-					<button class='buttonRight' on-tap='timer'>More Instructions</button>
-					</p>
-					{{/instructions}}
 
 					{{#stats}}
 					<h3>Score</h3>
 					{{points}}
 					<h3>Calories</h3>
 					{{calories}}
+
+					{{timePenalty}}
+					{{name}}
 					{{/stats}}
-					<h3>Turns Remaining<h3>
+					<h3>Years Remaining<h3>
 					{{turns}}
+
+					<h3> Exercise Area</h3>
+					<button on-tap='exercise'>Click to exercise and burn calories!</button>
 				</div>
 
 
@@ -41,15 +39,15 @@
 <div class='foodGrid'>
 
 	{{#foodGrid}}
-	{{#foodItemOne}}
+	{{#foodItem1}}
 	<div on-tap='selectFood:1' class='foodItem'>
 		<p class='name'>{{name}}</p>
 			<div class='details'>
 				<img class='mugshot'src='assets/food/{{image}}.jpg'>
 			</div>
 	</div>
-	{{/foodItemOne}}
-	{{#foodItemTwo}}
+	{{/foodItem1}}
+	{{#foodItem2}}
 		<div  on-tap='selectFood:2' class='foodItem'>
 			<p class='name'>{{name}}</p>
 			<div class='details'>
@@ -57,16 +55,16 @@
 			</div>
 
 		</div>
-	{{/foodItemTwo}}
-	{{#foodItemThree}}
+	{{/foodItem2}}
+	{{#foodItem3}}
 		<div  on-tap='selectFood:3' class='foodItem'>
 			<p class='name'>{{name}}</p>
 			<div class='details'>
 				<img class='mugshot'src='assets/food/{{image}}.jpg'>
 			</div>
 		</div>
-	{{/foodItemThree}}
-	{{#foodItemFour}}
+	{{/foodItem3}}
+	{{#foodItem4}}
 
 		<div on-tap='selectFood:4' class='foodItem'>
 			<p class='name'>{{name}}</p>
@@ -74,8 +72,8 @@
 				<img class='mugshot'src='assets/food/{{image}}.jpg'>
 			</div>
 		</div>
-	{{/foodItemFour}}
-	{{#foodItemFive}}
+	{{/foodItem4}}
+	{{#foodItem5}}
 
 		<div on-tap='selectFood:5' class='foodItem'>
 			<p class='name'>{{name}}</p>
@@ -84,8 +82,8 @@
 			</div>
 		</div>
 
-	{{/foodItemFive}}
-	{{#foodItemSix}}
+	{{/foodItem5}}
+	{{#foodItem6}}
 		<div on-tap='selectFood:6' class='foodItem'>
 			<p class='name'>{{name}}</p>
 			<div class='details'>
@@ -93,55 +91,55 @@
 			</div>
 		</div>
 
-	{{/foodItemSix}}
-	{{#foodItemSeven}}
+	{{/foodItem6}}
+	{{#foodItem7}}
 		<div on-tap='selectFood:7' class='foodItem'>
 			<p class='name'>{{name}}</p>
 			<div class='details'>
 				<img class='mugshot'src='assets/food/{{image}}.jpg'>
 			</div>
 		</div>
-	{{/foodItemSeven}}
-	{{#foodItemEight}}
+	{{/foodItem7}}
+	{{#foodItem8}}
 		<div on-tap='selectFood:8' class='foodItem'>
 			<p class='name'>{{name}}</p>
 			<div class='details'>
 				<img class='mugshot'src='assets/food/{{image}}.jpg'>
 			</div>
 		</div>
-	{{/foodItemEight}}
-	{{#foodItemNine}}
+	{{/foodItem8}}
+	{{#foodItem9}}
 		<div on-tap='selectFood:9' class='foodItem'>
 			<p class='name'>{{name}}</p>
 			<div class='details'>
 				<img class='mugshot'src='assets/food/{{image}}.jpg'>
 			</div>
 		</div>
-	{{/foodItemNine}}
-	{{#foodItemTen}}
+	{{/foodItem9}}
+	{{#foodItem10}}
 		<div on-tap='selectFood:10' class='foodItem'>
 			<p class='name'>{{name}}</p>
 			<div class='details'>
 				<img class='mugshot'src='assets/food/{{image}}.jpg'>
 			</div>
 		</div>
-	{{/foodItemTen}}
-	{{#foodItemEleven}}
+	{{/foodItem10}}
+	{{#foodItem11}}
 		<div on-tap='selectFood:11' class='foodItem'>
 			<p class='name'>{{name}}</p>
 			<div class='details'>
 				<img class='mugshot'src='assets/food/{{image}}.jpg'>
 			</div>
 		</div>
-	{{/foodItemEleven}}
-	{{#foodItemTwelve}}
+	{{/foodItem11}}
+	{{#foodItem12}}
 		<div on-tap='selectFood:12' class='foodItem'>
 			<p class='name'>{{name}}</p>
 			<div class='details'>
 				<img class='mugshot'src='assets/food/{{image}}.jpg'>
 			</div>
 		</div>
-	{{/foodItemTwelve}}
+	{{/foodItem12}}
 
 
 
@@ -154,26 +152,56 @@
 	{{#dialog}}
 		<div class='dialog-wrapper'>
 			<p class='dialog info'>
-				<img class='image' src='assets/images/gregormendel.jpg'> 
+
 				{{^instructions}}
-				Guten Tag! I'm Gregor Mendel, Austrian Friar and Scientist. I've been looking into the genetics of inheritance, but have been having trouble convincing people about what I've found. So I've set up this nice shiny shop to help give people what they want, using the powers of genetic inheritance. Hopefully that'll convince them that what I've found is important!
+	Are you a healthy eater? Are you aware of the diseases that afflict people who are overweight and with bad eating habits? 
 
-				Don't worry if you don't know anything about Genetics, I'll help you along the way. In return I hope you'll help me breed what the customers want!
+	Play this game and see who well you do! You’ll have the average human life span to eat the food you want – click on the food items to ‘eat’ them. Every food you eat will give you points and calories. 
 
-				Do we have a deal?
+	Calories are bad. You’ll get diseases if you store too many! Also your time will tick down faster if you have more calories.
 
-				<button on-tap='start'>Deal!</button>
+	Luckily you can work calories off by clicking ‘exercise’. 
+
+	Points are good. Collect as many points as you can, and use them to buy upgrades and improve your next game! 
+
+	Remember – eating unhealthily can mean not eating enough as well as eating too much! 
+
+	Select your gender to begin the game.
+
+				<button on-tap='start:1'>I am a woman</button>
+				<button on-tap='start:2'>I am a man</button>
 				{{/instructions}}
 
 
 				{{message}}
 
-				{{#wrong}}
-					<button on-tap='continuePlaying'>Continue Playing</button>
-				{{/wrong}}
+
 				{{#endgame}}
 					<button on-tap='playAgain'>Play another game</button>
+
+					Improve your game by purchasing upgrades! Use your points to buy items
+						{{#upgradeOne}}
+						{{name}} - {{description}}. Cost: {{cost}}points
+						<button on-tap='buyUpgrades:1'>Buy {{name}}</button>
+						{{/upgradeOne}}
+						{{#upgradeTwo}}
+						{{name}} - {{description}}. Cost: {{cost}}points
+						<button on-tap='buyUpgrades:2'>Buy {{name}}</button>
+						{{/upgradeTwo}}
+						{{#upgradeThree}}
+						{{name}} - {{description}}. Cost: {{cost}}points
+						<button on-tap='buyUpgrades:3'>Buy {{name}}</button>
+						{{/upgradeThree}}
+
 				{{/endgame}}
 			</p>
 		</div>
 	{{/dialog}}
+	{{#dialogDisease}}
+	<div class='dialog-diseaseWarning'>
+		<p class='dialog info'>
+		Uh oh...You have {{name}}!{{message}}
+		<button on-tap='dismiss'>Dismiss</button>
+		</p>
+	</div>
+	{{/dialogDisease}}
