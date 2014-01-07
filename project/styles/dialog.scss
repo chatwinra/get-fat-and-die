@@ -1,6 +1,7 @@
 .dialog-wrapper {
 	position: absolute;
 	width: 100%;
+	margin-top: 5%;
 	top: 50%;
 	left: 0;
 	text-align: center;
@@ -20,17 +21,28 @@
 }
 
 .dialog {
-	margin: 0 auto;
+	margin: 0em auto;
 	display: inline-block;
-	-webkit-transform: translate(0,-95%);
-	-moz-transform: translate(0,-95%);
-	-ms-transform: translate(0,-95%);
-	-o-transform: translate(0,-95%);
-	transform: translate(0,-95%);
+	-webkit-transform: translate(0,-65%);
+	-moz-transform: translate(0,-65%);
+	-ms-transform: translate(0,-65%);
+	-o-transform: translate(0,-65%);
+	transform: translate(0,-65%);
 
 		.image {
 	height: 25%;
 	width: 25%;
 	float: left;
 	}
+}
+
+.upgrade {
+	background-color: #97F294;
+	margin: 0.5em;
+	border: 1px solid #333;
+	box-shadow: 0 0 3px rgba(0,0,0,0.2);
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px; /* future proofing */
+	-khtml-border-radius: 10px; /* for old Konqueror browsers */
 }

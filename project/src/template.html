@@ -7,32 +7,35 @@
 
 
 <!--these instructions will progress as the player goes through different game stages-->
-
+			{{#stats}}
 				<div class='instructions-info' intro='fade'>
-					<h3>Time Per Year</h3>
-					{{#timer}}
-					{{mins}} : {{secs}} : 0{{tenths}} {{name}}
-					{{/timer}}
 
-					{{#stats}}
+					<div class='score'>
 					<h3>Score</h3>
 					{{points}}
+					</div>
+					<div class='calories'>
 					<h3>Calories</h3>
 					{{calories}}
-
-					{{timePenalty}}
-					{{name}}
-					{{/stats}}
-					<h3>Years Remaining<h3>
+					</div>					
+					<h3>Age</h3>
 					{{turns}}
+					<img class='mugshot' on-tap='exercise' src='assets/images/exercise.jpg'>
+					<p>Exercise!</p>
+					<div id='instructions' class='paper'>
+					<p> Doctor's Notebook </p>
 
-					<h3> Exercise Area</h3>
-					<button on-tap='exercise'>Click to exercise and burn calories!</button>
+						{{#dialogDisease}}
+
+						<p>
+						Uh oh...You have {{name}}!{{message}}
+						<button on-tap='dismiss'>Dismiss</button>
+						</p>
+
+						{{/dialogDisease}}
+					</div>
 				</div>
-
-
-
-
+			{{/stats}}		
 
 
 	
@@ -45,6 +48,7 @@
 			<div class='details'>
 				<img class='mugshot'src='assets/food/{{image}}.jpg'>
 			</div>
+
 	</div>
 	{{/foodItem1}}
 	{{#foodItem2}}
@@ -151,25 +155,24 @@
 
 	{{#dialog}}
 		<div class='dialog-wrapper'>
-			<p class='dialog info'>
+			<p class='dialog info'>						
 
 				{{^instructions}}
-	Are you a healthy eater? Are you aware of the diseases that afflict people who are overweight and with bad eating habits? 
+		<h3>
+		How healthy are you? 
 
-	Play this game and see who well you do! You’ll have the average human life span to eat the food you want – click on the food items to ‘eat’ them. Every food you eat will give you points and calories. 
+		Click food to eat it. Watch your calories. 
 
-	Calories are bad. You’ll get diseases if you store too many! Also your time will tick down faster if you have more calories.
+		Exercise can reduce your calorie count.
 
-	Luckily you can work calories off by clicking ‘exercise’. 
+		Points will help you get upgrades.
+			<br>
+			<br>
+			<em>Select your gender to begin the game.</em>
+			</h3>
 
-	Points are good. Collect as many points as you can, and use them to buy upgrades and improve your next game! 
-
-	Remember – eating unhealthily can mean not eating enough as well as eating too much! 
-
-	Select your gender to begin the game.
-
-				<button on-tap='start:1'>I am a woman</button>
-				<button on-tap='start:2'>I am a man</button>
+				<img class='woman' on-tap='start:1' src='assets/images/woman.jpg'>
+				<img class='man' on-tap='start:2' src='assets/images/man.jpg'>
 				{{/instructions}}
 
 
@@ -178,30 +181,52 @@
 
 				{{#endgame}}
 					<button on-tap='playAgain'>Play another game</button>
-
+					<p>
 					Improve your game by purchasing upgrades! Use your points to buy items
+					</p>
 						{{#upgradeOne}}
-						{{name}} - {{description}}. Cost: {{cost}}points
+					<div class='upgrade'>
+						<p>		
+						<h4>{{name}}</h4>  {{description}} 
+						<em>Cost: {{cost}} points</em>
 						<button on-tap='buyUpgrades:1'>Buy {{name}}</button>
+						</p>
+					</div>
 						{{/upgradeOne}}
+
 						{{#upgradeTwo}}
-						{{name}} - {{description}}. Cost: {{cost}}points
+					<div class='upgrade'>
+						<p>								
+						<h4>{{name}}</h4>  {{description}} 
+						<em>Cost: {{cost}} points</em>
 						<button on-tap='buyUpgrades:2'>Buy {{name}}</button>
+						</p>
+					</div>
 						{{/upgradeTwo}}
+
 						{{#upgradeThree}}
-						{{name}} - {{description}}. Cost: {{cost}}points
+					<div class='upgrade'>
+						<p>			
+						<h4>{{name}}</h4>  {{description}} 
+						<em>Cost: {{cost}} points</em>
 						<button on-tap='buyUpgrades:3'>Buy {{name}}</button>
+						</p>
+					</div>
 						{{/upgradeThree}}
 
 				{{/endgame}}
-			</p>
+			
 		</div>
 	{{/dialog}}
-	{{#dialogDisease}}
-	<div class='dialog-diseaseWarning'>
-		<p class='dialog info'>
-		Uh oh...You have {{name}}!{{message}}
-		<button on-tap='dismiss'>Dismiss</button>
-		</p>
-	</div>
-	{{/dialogDisease}}
+
+	<!--- old stuff --->
+
+
+
+	
+
+
+					{{#timer}}
+					{{mins}} : {{secs}} : 0{{tenths}} {{name}}
+					{{/timer}}
+

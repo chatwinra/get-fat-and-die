@@ -4,13 +4,15 @@
 
 	/* TODO
 	
-		* fix images- diff images for diff genotypes
-		* update descriptions 
-		* fix bull/cow level- then call it quits!
-		* reset function (in case end up in a corner by mating wrong parents)
-		* re-visit score mechanism- is it the best implementation?
-		* fix UI
-		* etc...
+		* complete diseases inc early death modifier
+		* CSS improvements for game
+			* exercise area look/feel/button
+			* score - make jazzier
+			* add 
+		* info pop up boxes?
+		* review how disease pop ups work
+			- maybe in 'doctor's notes' or something similar?
+		* review code 
 
 	*/
 
@@ -23,7 +25,6 @@
 				data: {
 
 					dialog: true
-
 
 				}
 			});
@@ -104,10 +105,10 @@
 				game.pointsUpgrade = 0;
 			}
 
-
+			game.turns = 0;
 			game.calories = 0;
 			game.timePenalty = 1;
-
+			game.chanceOfDeath = 100;
 
 			//set global variables for controlling turn number/time
 			//speed upgrade represents speed upgrades the player can get. Also represents initial timer increment of 100 mili secs
@@ -122,9 +123,11 @@
 
 			function setTurns(number){
 				if(number == 1){
-					game.turns = 80;
+					game.gender = 'woman';
+					game.turnLimit = 2000;
 				}else{
-					game.turns = 70;
+					game.gender = 'man';
+					game.turnLimit = 2000;
 				}
 			}
 			setTurns(number);
@@ -163,18 +166,19 @@
 		//timer function. counts up to a set time then resets and starts again- this represents a 'turn' (game.turns tracks these)
 		timer: function(){
 			var time = 0;
-
+			var timerOn = true;
 			
 
 			function startTimer(){
 				//check there are still turns remaining
-				if(game.turns > 0){
+				if(timerOn){
 					increment();
+
 				}
 
 			function increment(){ 
 				//as increment calls itself, check again that there are turns remaining
-				if(game.turns > 0){
+				if(timerOn && game.turns < game.turnLimit){
 				setTimeout(function(){
 					//this function calculates the speed
 						game.speedSetting();
@@ -200,29 +204,43 @@
 										foodItem11: game.food[10],
 										foodItem12: game.food[11]
 										});
-							game.turns --;
+							game.turns ++;
+							earlyDeath();
 							}
 						//makes seconds counter look purty with an extra '0'
+						//NB: timer has been removed but keeping this code here just in case it is brought back
 						if(secs < 10){
 							secs = '0' + secs};
 
 								game.view.set({
 
-									'timer.mins': mins,
-									'timer.secs': secs,
-									'timer.tenths': tenths,
+									//'timer.mins': mins,
+									//'timer.secs': secs,
+									//'timer.tenths': tenths,
 									turns: game.turns
 
 								});
 								//calls itself- the timer keeps going
 								increment();
+								
 									
 							}, game.speed);
 									} else {
-									//when this function stops, turns are over and the game ends
-									game.gameOver();
+									//check to see if turns have run out, if they have go to natural death ending
+									//else do nothing- the premature ending will already be triggered
+
+										game.gameOver();
+									
 								}		
 							}
+						//chance of premature death, takes bonuses from diseases also
+						function earlyDeath() {
+							if(Math.random() * 100 > game.chanceOfDeath){
+								game.gameOverEarly();
+								timerOn = false;
+
+							}
+						}
 						}	
 					startTimer();
 				},		
@@ -259,7 +277,7 @@
 
 				});
 			game.disease();
-			finishedLoading(bufferList);
+
 
 			}
 
@@ -376,7 +394,7 @@
 		gameOver: function() {
 			game.finalPoints = game.points - game.calories;
 			game.view.set({
-				'dialog.message': 'Game Over! You scored ' + game.points + ' points, with a final calorie count of ' + game.calories + ', to give a total of ' + game.finalPoints + ' points',
+				'dialog.message': 'You reached the average life span of a '+ game.gender+ '. You scored ' + game.points + ' points, with a final calorie count of ' + game.calories + ', to give a total of ' + game.finalPoints + ' points',
 				endgame: true,
 				upgradeOne: game.upgradesList[0],
 				upgradeTwo: game.upgradesList[1],
@@ -384,7 +402,20 @@
 
 			});
 			game.points = game.finalPoints;
-		}
+		},
+
+		gameOverEarly: function() {
+			game.finalPoints = game.points - game.calories;
+			game.view.set({
+				'dialog.message': 'You died prematurely! This can be prevented by living a healthier lifestyle. You scored ' + game.points + ' points, with a final calorie count of ' + game.calories + ', to give a total of ' + game.finalPoints + ' points',
+				endgame: true,
+				upgradeOne: game.upgradesList[0],
+				upgradeTwo: game.upgradesList[1],
+				upgradeThree: game.upgradesList[2]
+
+			});
+			game.points = game.finalPoints;
+		},		
 
 	};
 

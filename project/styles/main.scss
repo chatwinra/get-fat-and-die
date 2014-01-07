@@ -32,11 +32,13 @@ h3 {
 
 p {
 	margin: 0 0 1em 0;
+
 }
 
 p.instructions {
 	margin: 0 0 1em 0;
 }
+
 
 a {
 	color: $blue;
@@ -75,10 +77,8 @@ button, .mate {
 }
 
 @import "layout";
-@import "wildlife";
 @import "footer";
 @import "pending";
-@import "instructions";
 @import "dialog";
-@import "whose-turn";
 @import "header";
+@import "food";

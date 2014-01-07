@@ -1,4 +1,6 @@
 name,calories,message,timePenalty
-high blood pressue,4000,You've got high blood pressue. You can work this off using exercise,0
-diabetes,7000,diabetes will speed your time up,1.5
-heart disease,9000,you may have a heart attack,2
+high blood pressue,4000,You can work this off using exercise,0
+diabetes,8000,Diabetes will speed your time up,1.5
+heart disease,9000,You may have a heart attack and die prematurely,2
+high cholesterol,12000,"You have high cholesterol levels, which will increase your chances of a heart attack. Excerise to get rid of high cholesterol.",0
+back pain,6000,You have back pain as you're slightly overweight. Exercise can reduce this.,0
