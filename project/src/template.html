@@ -20,7 +20,7 @@
 					</div>					
 					<h3>Age</h3>
 					{{turns}}
-					<img class='mugshot' on-tap='exercise' src='assets/images/exercise.jpg'>
+					<img class='mugshot-exercise' on-tap='exercise' src='assets/images/exercise.jpg'>
 					<p>Exercise!</p>
 					<div id='instructions' class='paper'>
 					<p> Doctor's Notebook </p>
@@ -166,6 +166,7 @@
 		Exercise can reduce your calorie count.
 
 		Points will help you get upgrades.
+
 			<br>
 			<br>
 			<em>Select your gender to begin the game.</em>
@@ -173,51 +174,176 @@
 
 				<img class='woman' on-tap='start:1' src='assets/images/woman.jpg'>
 				<img class='man' on-tap='start:2' src='assets/images/man.jpg'>
+				<br>
+				<p><sup><em>Your gender will influence your playing time. One gender has a longer average life expectancy in the UK than the other!<em><sup></p>
+
 				{{/instructions}}
 
+		</div>
+	{{/dialog}}
 
-				{{message}}
+	{{#diaEnd}}				
+		<div class='dialog-wrapper-upgrades'>
+			<div class='dialog-end info'>
+
+				<h3> Player Overall Rating - B</h3>
+
+				{{message}}<br> 
+
+				<p>Your final score (points - calories) is: {{finalScore}} points</p>
+				<div id='instructions' class='paper'>
+					<p> Final Doctor's Note: </p>
+						<p>
+						{{doctor}}
+						</p>
+				</div>
+				<p>Play again, purchase upgrades, or read below to see how to improve your score! For every 'A' rank you unlock a cell trophy</p>
+				<button on-tap='playAgain'>Play another game</button>
+				<button on-tap='viewUpgrades:1'>See upgrades</button>
+				<button on-tap='viewCellTrophies:1'>View collected cells</button>
 
 
-				{{#endgame}}
-					<button on-tap='playAgain'>Play another game</button>
-					<p>
+				<h3> Scientist Rating </h3>
+
+
+				<div class="thisScorevsLastScore">
+				<p>This game score: {{thisScore}}</p>
+				<p>Best: {{bestScore}}</p>				
+				<p>Sub-rating: C...Unlucky - your performance was better last time!</p>
+				</div>
+
+				<div class="timeSpentReading">
+					<p> You spent {{readingTime}} minutes reading more info </p>
+					<p>Sub-rating: C...You should spend a bit more time reading about the science!</p>
+				</div>
+				
+				<h3> Healthiness Rating </h3>
+				<div class="distanceTravelled">
+					<p>Your cursor travelled {{cursorDistance}} pixels</p>
+					<p>Sub-rating: A....Great! Your cursor travelled 10 000 pixels! Did you know the recommended step count per day is 10 000?</p>
+				</div>
+
+				<div class="foodTypes">
+					<p>Sub-rating: C....Poor! Your preferred food types were processed food. Ugh!</p>
+				</div>
+				
+
+
+				<div class="caloriesOverTime">				
+					<p>Sub-rating: B...Nice! You balanced eating and excercise well</p>
+				</div>
+
+
+			</div>
+
+		</div>
+	{{/diaEnd}}
+
+
+	{{#upgrades}}				
+		<div class='dialog-wrapper-upgrades'>
+			<p class='dialog info-upgrades'>	
+
+					
 					Improve your game by purchasing upgrades! Use your points to buy items
-					</p>
+				
 						{{#upgradeOne}}
 					<div class='upgrade'>
-						<p>		
+	
 						<h4>{{name}}</h4>  {{description}} 
-						<em>Cost: {{cost}} points</em>
+						<p>	<em>Cost: {{cost}} points</em></p>
 						<button on-tap='buyUpgrades:1'>Buy {{name}}</button>
-						</p>
+						
 					</div>
 						{{/upgradeOne}}
 
 						{{#upgradeTwo}}
 					<div class='upgrade'>
-						<p>								
+													
 						<h4>{{name}}</h4>  {{description}} 
-						<em>Cost: {{cost}} points</em>
+						<p>	<em>Cost: {{cost}} points</em></p>
 						<button on-tap='buyUpgrades:2'>Buy {{name}}</button>
-						</p>
+						
 					</div>
 						{{/upgradeTwo}}
 
 						{{#upgradeThree}}
 					<div class='upgrade'>
-						<p>			
+								
 						<h4>{{name}}</h4>  {{description}} 
-						<em>Cost: {{cost}} points</em>
+						<p>	<em>Cost: {{cost}} points</em></p>
 						<button on-tap='buyUpgrades:3'>Buy {{name}}</button>
-						</p>
+						
 					</div>
-						{{/upgradeThree}}
-
-				{{/endgame}}
 			
+						{{/upgradeThree}}
+			
+
+					<button on-tap='viewUpgrades:2'>Back to summary</button>
+				</p>	
+			</div>
+		{{/upgrades}}
+
+		{{#cellTrophies}}
+		<div class='dialog-wrapper-upgrades'>
+			<div class='dialog'>
+				<div class='upgrade'>
+	
+					{{#cellTrophy1}}
+					<div class='cell'>
+						<p class='name'>{{name}}</p>
+							<div class='cell-details'>
+								<img class='cell-mugshot'src='assets/cells/{{image}}.jpg'>
+								{{description}}								
+							</div>
+					</div>
+					{{/cellTrophy1}}
+					<div class='dialog-cell'>
+						<p class='dialog-cell-name'>{{name}}</p>
+							<div class='dialog-cell-details'>
+								<img class='dialog-cell-mugshot'src='assets/cell/{{image}}.jpg'>
+								{{description}}							
+							</div>
+					</div>
+
+					<div class='dialog-cell'>
+						<p class='dialog-cell-name'>{{name}}</p>
+							<div class='dialog-cell-details'>
+								<img class='dialog-cell-mugshot'src='assets/cell/{{image}}.jpg'>
+								{{description}}							
+							</div>
+
+					</div>
+
+					<div class='dialog-cell'>
+						<p class='dialog-cell-name'>{{name}}</p>
+							<div class='dialog-cell-details'>
+								<img class='dialog-cell-mugshot'src='assets/cell/{{image}}.jpg'>
+								{{description}}							
+							</div>
+					</div>
+
+					<div class='dialog-cell'>
+						<p class='dialog-cell-name'>{{name}}</p>
+							<div class='dialog-cell-details'>
+								<img class='dialog-cell-mugshot'src='assets/cell/{{image}}.jpg'>
+								{{description}}							
+							</div>
+					</div>
+				<button on-tap='viewCellTrophies:2'>Back to summary</button>
+				</div>
+			</div>
 		</div>
-	{{/dialog}}
+		{{/cellTrophies}}
+
+			{{#noClicks}}
+		<div class='dialog-wrapper'>
+			<p class='dialog info'>	
+					You didn't press anything! Try again, and get stuck in!
+					<button on-tap='playAgain'>Play another game</button>
+				</p>
+			</div>
+			{{/noClicks}}
 
 	<!--- old stuff --->
 

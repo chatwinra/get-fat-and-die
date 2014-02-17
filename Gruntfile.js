@@ -79,6 +79,10 @@ module.exports = function(grunt) {
 			csv3: {
 				url:'https://docs.google.com/spreadsheet/pub?key=0AkdKGjqWcdvVdGFsRFg3dDNpMXltZEhtVDN2aGZDWWc&single=true&gid=2&output=csv',
 				dest: 'Project/src/upgrades.csv'
+			},
+			csv4: {
+				url:'https://docs.google.com/spreadsheet/pub?key=0AkdKGjqWcdvVdGFsRFg3dDNpMXltZEhtVDN2aGZDWWc&single=true&gid=3&output=csv',
+				dest: 'Project/src/cells.csv'
 			}
 		},
 	});

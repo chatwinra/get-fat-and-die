@@ -71,7 +71,17 @@ button, .mate {
 	border: 1px solid #aaa;
 	border-radius: 0.2em;
 	box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
-	padding: 1em 2em;
+	padding: -5em 2em;
+	margin: 0;
+	@include border-box;
+}
+
+.info-upgrades {
+	background-color: #9FD3F5;
+	border: 1px solid #aaa;
+	border-radius: 0.2em;
+	box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+	padding: -5em 2em;
 	margin: 0;
 	@include border-box;
 }
@@ -82,3 +92,5 @@ button, .mate {
 @import "dialog";
 @import "header";
 @import "food";
+@import "graphs";
+@import "cell";
