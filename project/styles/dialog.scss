@@ -67,6 +67,21 @@
 
 }
 
+.dialog-wrapper-cells {
+	position: absolute;
+	width: 100%;
+	margin-top: 5%;
+	top: 50%;
+	left: 0;
+	text-align: center;
+	z-index: 10;
+	-webkit-transform: translate(0,-45%);
+	-moz-transform: translate(0,-45%);
+	-ms-transform: translate(0,-45%);
+	-o-transform: translate(0,-45%);
+	transform: translate(0,-45%);
+}
+
 .dialog-wrapper-analysis {
 	position: absolute;
 	background-color: #97F294;
@@ -153,6 +168,11 @@
 	box-shadow: 0 0 3px rgba(0,0,0,0.2);
 
 }
+
+.thisScorevsLastScore rect {
+  fill: steelblue;
+}
+
 .timeSpentReading {
 
 	border: 1px solid #333;

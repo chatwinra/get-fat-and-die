@@ -82,6 +82,10 @@
 					game.viewAnalysis( label );
 				},
 
+				tooltip: function (event, a){
+					game.tooltip( a );
+				},
+
 				viewCellTrophies: function ( event, label){
 					game.viewCellTrophies( label );
 				},
@@ -117,9 +121,9 @@
 		
 
 			//sets/resets initial values for score dashboard. points are 0 unless the player has already played, in which case the total is carried over
-			if(typeof game.points ==='undefined'){
+			//if(typeof game.points ==='undefined'){
 			game.points = 0;
-			}
+			//}
 
 			if(typeof game.pointsUpgrade ==='undefined'){
 				game.pointsUpgrade = 0;
@@ -369,10 +373,10 @@
 				if(game.calories >= game.diseases[i].calories){
 					//if match is found, remove that element from the array (altering the array is fine as it will be 
 					//re-instated at the start of each game)
+					game.diseaseHistory.push(game.diseases[i]);
 					var a = game.diseases.splice(i, 1);
-
 					//add it to the disease history array
-					game.diseaseHistory.push(a);
+					//game.diseaseHistory.push(a);
 
 					game.view.set({
 						dialogDisease: a
@@ -451,25 +455,39 @@
 			} else {
 				if(game.finalPoints > game.scoreHistory[1]){
 					game.scoreHistory[1] = game.finalPoints;
+				} else {
+					game.view.set('hasScoreImproved', 'not');
 				}
 			}
+
+
+
 			if(game.events.length > 0){
+
+			for(var i = 0; i < game.diseaseHistory.length; i++){
+				game.view.set('test'+ i, game.diseaseHistory[i]);
+			}
+			//test( game.events );
+
+
 			game.view.set({
-				message: 'Congratulations. You lived a long, rich life and reached the average life span of a '+ game.gender +'!',
+				outcome: 'Congratulations. You lived a long, rich life and reached the average life span of a '+ game.gender +'!',
 				finalScore: game.finalPoints,
 				doctor: a,
 				diaEnd: true,
-				thisScore: game.finalPoints,
-				bestScore: game.scoreHistory[1],
 				upgradeOne: game.upgradesList[0],
 				upgradeTwo: game.upgradesList[1],
 				upgradeThree: game.upgradesList[2],
 				readingTime: game.readingTime,
 				cursorDistance: game.playerRatings.cursorDistance
 
+
 			});
-			test( game.events );
+
 			pieChart( game.events );
+			barChart();
+			twttr.widgets.load();
+			game.view.set('preferredFoodType',game.preferredFoodType.name);
 
 				} else {
 			game.view.set({
@@ -522,12 +540,25 @@
 				caloriesBurned: game.playerRatings.caloriesBurned,
 				scoreImprovement: game.playerRatings.scoreImprovement
 			});
-			test( game.events );
+			//test( game.events );
 			}else{
 			game.readingTime += Math.floor(((((new Date() - game.tempDate)/1000)/60)));
 				game.view.set({
 				analysis: false
 				});
+			}
+		},
+
+		tooltip: function( a ){
+			if(a == "return"){
+				game.view.set({
+					tooltips: false
+				})
+			} else {
+				game.view.set({
+					tooltips: true,
+					a: true
+				})
 			}
 		},
 
@@ -537,7 +568,11 @@
 
 			game.view.set({
 				cellTrophies: true,
-				cellTrophy1: game.cellList[0]
+				cellTrophy2: game.cellList[1],
+				cellTrophy3: game.cellList[2],
+				cellTrophy4: game.cellList[3],
+				cellTrophy5: game.cellList[4]
+
 			});
 			}else{
 				game.view.set({

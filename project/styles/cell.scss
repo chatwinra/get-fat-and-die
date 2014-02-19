@@ -2,17 +2,44 @@
 
 .cell {
 	position: relative;
+	float: left;
+	margin-left: 5%;
+	margin: 0.5em 0em 0.5em 5%;
 	border: 1px solid #333;
 	border-radius: 0.2em;
 	width: 18em;
-	height: 24em;
+	height: 13em;
 	text-align: left;
 	background-color: #FEFCFF;
 	box-shadow: 0 0 3px rgba(0,0,0,0.2);
+	overflow: scroll;
+	@include border-box;
+}
 
+.cell-front {
 	height: 100%;
+	position: relative;
 	padding: 2em 0.5em 8em 0.5em;
 	@include border-box;
+}
+
+
+.cell-back {
+	height: inherit;
+	background: url(assets/images/locked.jpg) no-repeat 50% 50%;
+	background-size: contain;
+	background-position: top;
+	opacity: 1;
+
+	-webkit-transition: opacity 0.4s;
+	-moz-transition: opacity 0.4s;
+	-ms-transition: opacity 0.4s;
+	-o-transition: opacity 0.4s;
+	transition: opacity 0.4s;
+
+	&.faded {
+		opacity: 0.5;
+	}
 }
 
 .cell-name {
@@ -32,7 +59,6 @@
 	height: 100%;
 	padding: 0.5em 0;
 	border-top: 1px solid #eee;
-	border-bottom: 1px solid #eee;
 	@include border-box;
 
 	p {
@@ -42,6 +68,12 @@
 
 .cell-mugshot {
 	height: 7.5em;
+	width: 10em;
 	float: right;
 	margin: 0 0 0.5em 1em;
+}
+
+.cell-footer{
+	clear: both;
+	padding: 0.5em;
 }

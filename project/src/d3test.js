@@ -117,7 +117,7 @@ function barChart(){
 
 	game.data = [];
 	game.data[0] = {
-		name: 'This game score',
+		name: 'This game',
 		value: game.finalPoints
 	};
 
@@ -126,6 +126,41 @@ function barChart(){
 		value: game.scoreHistory[game.scoreHistory.length - 1] 
 	};
 
+var width = 420,
+    barHeight = 20;
+
+var x = d3.scale.linear()
+    .range([0, width])
+	.domain([0, d3.max(game.data, function(d) { return d.value; })]);
+
+
+
+var chart = d3.select(".thisScorevsLastScore").append("svg")
+    .attr("width", width)
+	.attr("height", barHeight * game.data.length);
+
+
+
+  var bar = chart.selectAll("g")
+      .data(game.data)
+    .enter().append("g")
+      .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; })
+
+  bar.append("rect")
+      .attr("height", barHeight - 1)
+      .attr("width", 0)
+      .transition()
+      .duration(2000)
+      .attr("width", function(d) { return x(d.value); });
+
+  bar.append("text")
+      .attr("x", function(d) { return x(d.value) - 280; })
+      .attr("y", barHeight / 2)
+      .attr("dy", ".35em")
+      .attr("fill", "white")
+      .text(function(d) { return d.name + " :" + d.value; });
+
+      /*
 // A formatter for counts.
 var formatCount = d3.format(",.0f");
 
@@ -133,17 +168,16 @@ var margin = {top: 10, right: 30, bottom: 30, left: 30},
     width = 500 - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
 
-var x = d3.scale.ordinal()
+var y = d3.scale.ordinal()
     .domain(game.data.map(function(d) { return d.name; }))
     .rangeRoundBands([0, width], 1.0);
 
 
-var y = d3.scale.linear()
+var x = d3.scale.linear()
     .domain([0, d3.max(game.data, function(d) { return d.value; })])
     .range([height, 0], 0.2);
 
 var xAxis = d3.svg.axis()
-    .orient("bottom")
     .ticks(2)
     .scale(x);
 
@@ -167,37 +201,6 @@ var chart = d3.select(".thisScorevsLastScore").append("svg")
       .attr("y", function(d) { return y(d.value); })
       .attr("height", function(d) { return height - y(d.value); })
       .attr("width", 20);
-
-/*
-var svg = d3.select(".thisScorevsLastScore").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-var bar = svg.selectAll(".bar")
-    .data(game.data)
-  .enter().append("g")
-    .attr("class", "bar");
-
-
-bar.append("rect")
-      .attr("y", function(d) { return y(d.value); })
-      .attr("height", function(d) { return height - y(d.value); })
-      .attr("width", 10);
-
-
-bar.append("text")
-    .attr("dy", ".75em")
-    .attr("y", 6)
-    .attr("x", x(game.data[0].value) / 2)
-    .attr("text-anchor", "middle")
-    .text(function(d) { return formatCount(d.value); });
-
-svg.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
-    .call(xAxis);
 */
 function type(d) {
   d.value = +d.value; // coerce to number
@@ -247,8 +250,20 @@ function pieChart( array ){
 		   game.finalDataset.pop();
 		   return game.finalDataset;
 		}
+
 game.dataset.getUnique();
-	
+
+game.preferredFoodType = {
+	name: 'nothing',
+	value: 0
+};
+
+for(var k = 0; k < game.finalDataset.length - 1; k++){
+	if(game.finalDataset[k][1] > game.preferredFoodType.value){
+		game.preferredFoodType.name = game.finalDataset[k][0];
+		}
+	}
+
 
     var w = 300,                        //width
     h = 300,                            //height
@@ -282,14 +297,15 @@ game.dataset.getUnique();
  
         arcs.append("svg:text")                                     //add a label to each slice
                 .attr("transform", function(d) {                    //set the label's origin to the center of the arc
-                //we have to make sure to set these before calling arc.centroid
+               												 //we have to make sure to set these before calling arc.centroid
                 d.innerRadius = 0;
                 d.outerRadius = r;
                 return "translate(" + arc.centroid(d) + ")";        //this gives us a pair of coordinates like [50, 50]
             })
             .attr("text-anchor", "middle")   
             .style("z-index", "5")
-            .style("overflow", "visible")                       
+            .style("overflow", "visible")    
+      		.attr("fill", "white")                   
             .text(function(d, i) { return game.finalDataset[i][0]; });        //get the label from our original data array
 
 
