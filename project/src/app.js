@@ -4,15 +4,15 @@
 
 	/* TODO
 	
-		* complete diseases inc early death modifier
 		* CSS improvements for game
-			* exercise area look/feel/button
-			* score - make jazzier
-			* add 
+			* when score increases, make more obvious
 		* info pop up boxes?
-		* review how disease pop ups work
-			- maybe in 'doctor's notes' or something similar?
 		* review code 
+		* add logic for:
+			- unlocking cells
+			- generating player rating
+		* add audio
+		* add tip array
 
 	*/
 
@@ -24,7 +24,10 @@
 				template: template,
 				data: {
 
-					dialog: true
+					dialog: true,
+					upgrade1Bought: true,
+					upgrade2Bought: true,
+					upgrade3Bought: true
 
 				}
 			});
@@ -57,10 +60,6 @@
 					game.disease();
 				},
 
-				dismiss: function( event ) {
-					game.dismiss();
-				},
-
 				buyUpgrades: function ( event, number) {
 					game.buyUpgrades ( number );
 				},
@@ -76,10 +75,6 @@
 
 				viewUpgrades: function ( event, label){
 					game.viewUpgrades( label );
-				},
-
-				viewAnalysis: function ( event, label){
-					game.viewAnalysis( label );
 				},
 
 				tooltip: function (event, a){
@@ -100,12 +95,24 @@
 			
 			game.view.set({
 
-
 					instructions:true,
 					dialogDisease: null,
 					diaEnd: false,
+					diaEndEarly: false,
 					dialog: false,
-					noClicks: false
+					noClicks: false,
+					disease1: false,
+					disease2: false,
+					disease3: false,
+					disease4: false,
+					disease5: false,
+					disease6: false,
+					disease7: false,
+					disease8: false,
+					disease9: false,
+					disease10: false,
+					//if set to 'null' IE displays it, so set to blank space instead
+			        zeroPointsReason: ' '
 				
 			});
 		},
@@ -113,41 +120,40 @@
 		// Start a new round
 		start: function (number) {
 
+			//reset Ractive tags
 			game.reset();
-
 
 			// shuffle food data
 			shuffle(game.food);
 		
-
-			//sets/resets initial values for score dashboard. points are 0 unless the player has already played, in which case the total is carried over
-			//if(typeof game.points ==='undefined'){
+			//set stats to 0 for each playthrough
 			game.points = 0;
-			//}
+			game.turns = 0;
+			game.calories = 0;
 
+			//check if points upgrade is purchased or not
 			if(typeof game.pointsUpgrade ==='undefined'){
 				game.pointsUpgrade = 0;
 			}
 
-			game.turns = 0;
-			game.calories = 0;
+			//reset time penalty- this figure is changed as calories increase and causes time to speed up
 			game.timePenalty = 1;
+			//actually, chance of death is % chance of NOT dying. so starts at 100
 			game.chanceOfDeath = 100;
+			//array to capture click events
 			game.events = [];
 
-
+			//array keeps track of scores
 			if(typeof game.scoreHistory ==='undefined'){
 				game.scoreHistory = [];
 	
 			}
-
+			//keeps track of time spent reading extra info
 			if(typeof game.readingTime ==='undefined'){
 				game.readingTime = 0;
 	
 			}
 
-
-			//set global variables for controlling turn number/time
 			//speed upgrade represents speed upgrades the player can get. Also represents initial timer increment of 100 mili secs
 			if(typeof game.speedUpgrade === 'undefined'){
 			game.speedUpgrade = 100;
@@ -179,7 +185,7 @@
 			//clone disease data
 			game.diseases = game.diseaseList.slice();
 
-			//clone cell trophy list
+			//clone cell trophy list - for now not needed so commented out
 
 			//game.cellList = game.cellTrophy.slice();
 
@@ -188,7 +194,6 @@
 
 			//call timer func to start game
 			game.timer();
-
 
 			// create food grid and stat counters
 			game.view.set({
@@ -219,20 +224,16 @@
 			var time = 0, timerOn = true;
 
 
-
-			function startTimer(){
-				//check there are still turns remaining
-				if(timerOn){
-					increment();
-
-
-				}
+			
 
 			function increment(){ 
 				//as increment calls itself, check again that there are turns remaining
 				if(timerOn && game.turns < game.turnLimit){
 
-
+							if(Math.random() * 90 > game.chanceOfDeath){
+								game.gameOverEarly();
+								timerOn = false;
+							} else {
 
 
 				setTimeout(function(){
@@ -262,10 +263,9 @@
 										foodItem12: game.food[11]
 										});
 							game.turns ++;
-							earlyDeath();
+
 							}
-						//makes seconds counter look purty with an extra '0'
-						//NB: timer has been removed but keeping this code here just in case it is brought back
+
 						if(secs < 10){
 							secs = '0' + secs};
 
@@ -282,25 +282,21 @@
 								
 									
 							}, game.speed);
-									} else {
+									}
+
+								} else {
 									//check to see if turns have run out, if they have go to natural death ending
 									//else do nothing- the premature ending will already be triggered
 
 										game.gameOver();
 
 								}		
-							}
-						//chance of premature death, takes bonuses from diseases also
-						function earlyDeath() {
-							if(Math.random() * 100 > game.chanceOfDeath){
-								game.gameOverEarly();
-								timerOn = false;
+							
 
-							}
-						}
-						}	
-					startTimer();
-				},		
+				}
+			increment();
+			
+			},		
 
 
 		//calculates the game speed, which is passed into the timer function. Putting this in a separate place makes it easier to control this vital func
@@ -344,13 +340,16 @@
 
 
 		captureEvent: function ( event ){
+			if( !event ) event = window.event;
 			var e = {};
+
 			e.context = event.context;
-			e.original = event.original;
-			e.original.pageX = event.original.pageX;
-			e.original.pageY = event.original.pageY;
+			e.pageX = event.original.pageX;
+			e.pageY = event.original.pageY;
 			e.time = new Date();
 			e.calories = game.calories;
+
+
 
 			game.events.push( e );
 
@@ -360,7 +359,6 @@
 		//controls the exercise option
 		exercise: function () {
 		if( game.turns != game.turnLimit  ){
-
 			game.calories -= game.calorieUpgrade;
 			game.view.set('stats.calories', game.calories)
 			}
@@ -373,72 +371,92 @@
 				if(game.calories >= game.diseases[i].calories){
 					//if match is found, remove that element from the array (altering the array is fine as it will be 
 					//re-instated at the start of each game)
-					game.diseaseHistory.push(game.diseases[i]);
-					var a = game.diseases.splice(i, 1);
+
+					game.tempDisease = game.diseases.splice(i, 1);
+					game.diseaseHistory.push(game.tempDisease);
 					//add it to the disease history array
 					//game.diseaseHistory.push(a);
 
 					game.view.set({
-						dialogDisease: a
+						dialogDisease: game.tempDisease
 						/*'stats.timePenalty': a.timePenalty, //for troubleshooting - displays timepenalty and last disease name
 						'stats.name': game.diseases[0].name*/
 					});
-					game.timePenalty += a.timePenalty;
+					game.timePenalty += game.diseaseHistory[game.diseaseHistory.length - 1][0].timePenalty;
+					game.chanceOfDeath = game.diseaseHistory[game.diseaseHistory.length - 1][0].earlyDeathRisk;
 
 				}
 			}
 			return game.timePenalty;
 		},
 
-		//alows player to dismiss notifications on diseases
-		dismiss: function() {
-			game.view.set('dialogDisease', false);
-		},
 
 		//allows players to buy upgrades. first checks for if they have enough points to buy the requested upgrade, and if they do, alters the associated game variable
 		buyUpgrades: function ( upgradeNumber ){
 		if(game.upgradesList[upgradeNumber-1].cost > game.finalPoints){
 			alert("You don't have enough points to buy this upgrade! Keep playing to build up points");
 		}else{
-			if(game.upgradesList[upgradeNumber-1].affects = 'calories'){
+			if(game.upgradesList[upgradeNumber-1].affects == 'calories'){
 				game.calorieUpgrade += game.upgradesList[upgradeNumber-1].benefit;
 				alert("Congratulations! You now burn more calories doing exercise!");
 				game.finalPoints -= game.upgradesList[upgradeNumber-1].cost;
+				game.view.set('finalScore', game.finalPoints);
 
 					
 						}else{
-							if(game.upgradesList[upgradeNumber-1].affects = 'speed'){
+							if(game.upgradesList[upgradeNumber-1].affects =='speed'){
 							game.speedUpgrade += game.upgradesList[upgradeNumber-1].benefit;
 							alert("Congratulations! You're healther so you have more time per year to enjoy life!");
 							game.finalPoints -= game.upgradesList[upgradeNumber-1].cost;
+							game.view.set('finalScore', game.finalPoints);
 
 													}
 									 else{
-										if(game.upgradesList[upgradeNumber-1].affects = 'points'){
+										if(game.upgradesList[upgradeNumber-1].affects == 'points'){
 										game.pointsUpgrade += game.upgradesList[upgradeNumber-1].benefit;
 										alert("Congratulations! You get more points per food item.");
 										game.finalPoints -= game.upgradesList[upgradeNumber-1].cost;
+										game.view.set('finalScore', game.finalPoints);
 												}
 										}
 							}
 
 					if(upgradeNumber==1){
-						game.view.set('upgradeOne', false);
+						game.view.set({
+							upgrade1: false,
+							upgrade1Bought: false
+
+							});
+
 					}
 
 					if(upgradeNumber==2){
-						game.view.set('upgradeTwo', false);
+						game.view.set({
+							upgrade2: false,
+							upgrade2Bought: false
+
+							});
 					}
 
 					if(upgradeNumber==3){
-						game.view.set('upgradeThree', false);
+						game.view.set({
+							upgrade3: false,
+							upgrade3Bought: false
+
+							});
 					}
 			}
 
 		},
 
 		gameOver: function() {
-			game.finalPoints = game.points - game.calories;
+
+
+			game.finalPoints = (game.points - game.calories <= 0) ? 0 : game.points - Math.abs(game.calories);
+
+			if(game.finalPoints == 0){
+				game.view.set('zeroPointsReason', 'because you had more calories than points :( ');
+			}
 
 			if(game.diseaseHistory.length > 3){
 				var a = 'This patient is very unhealthy';
@@ -448,6 +466,12 @@
 
 			game.analyse(game.events);
 
+			if(game.finalPoints == 0){
+				game.view.set('scoreGraph', false);
+			} else {
+				game.view.set('scoreGraph', true);
+
+			}
 
 			if(!game.scoreHistory[0]){
 				game.scoreHistory[0] = game.finalPoints;
@@ -464,20 +488,33 @@
 
 			if(game.events.length > 0){
 
-			for(var i = 0; i < game.diseaseHistory.length; i++){
-				game.view.set('test'+ i, game.diseaseHistory[i]);
+			if(game.diseaseHistory.length == 0){
+				game.view.set('doctor', 'You are very healthy, well done');
+			} else {
+				game.view.set({
+					doctor: 'Patient has following heath issues:',
+					disease1: game.diseaseHistory[0],
+					disease2: game.diseaseHistory[1],
+					disease3: game.diseaseHistory[2],
+					disease4: game.diseaseHistory[3],
+					disease5: game.diseaseHistory[4],
+					disease6: game.diseaseHistory[5],
+					disease7: game.diseaseHistory[6],
+					disease8: game.diseaseHistory[7],
+					disease9: game.diseaseHistory[8],
+					disease10: game.diseaseHistory[9]
+				})
 			}
+			//unused scatter graph, not needed for now
 			//test( game.events );
 
-
 			game.view.set({
-				outcome: 'Congratulations. You lived a long, rich life and reached the average life span of a '+ game.gender +'!',
 				finalScore: game.finalPoints,
-				doctor: a,
 				diaEnd: true,
-				upgradeOne: game.upgradesList[0],
-				upgradeTwo: game.upgradesList[1],
-				upgradeThree: game.upgradesList[2],
+				tip: 'Tip: More calories = faster game as research suggests being overweight speeds ageing!',
+				upgrade1: game.upgradesList[0],
+				upgrade2: game.upgradesList[1],
+				upgrade3: game.upgradesList[2],
 				readingTime: game.readingTime,
 				cursorDistance: game.playerRatings.cursorDistance
 
@@ -498,13 +535,32 @@
 		},
 
 		gameOverEarly: function() {
-			game.finalPoints = game.points - game.calories;
+			game.finalPoints = (game.points - game.calories <= 0) ? 0 : game.points - game.calories;
+
+			if(game.finalPoints == 0){
+				game.view.set('zeroPointsReason', 'because you had more calories than points :( ');
+			}
+
 			game.view.set({
-				'diaEnd.message': 'You died prematurely! This can be prevented by living a healthier lifestyle. You scored ' + game.points + ' points, with a final calorie count of ' + game.calories + ', to give a total of ' + game.finalPoints + ' points',
-				diaEnd: true,
-				upgradeOne: game.upgradesList[0],
-				upgradeTwo: game.upgradesList[1],
-				upgradeThree: game.upgradesList[2]
+				diaEndEarly: true,
+				diaEnd: false,
+				finalScore: game.finalPoints,
+				disease: game.diseaseHistory[game.diseaseHistory.length - 1][0].name,
+				doctor: 'Patient has following heath issues:',
+				disease1: game.diseaseHistory[0],
+				disease2: game.diseaseHistory[1],
+				disease3: game.diseaseHistory[2],
+				disease4: game.diseaseHistory[3],
+				disease5: game.diseaseHistory[4],
+				disease6: game.diseaseHistory[5],
+				disease7: game.diseaseHistory[6],
+				disease8: game.diseaseHistory[7],
+				disease9: game.diseaseHistory[8],
+				disease10: game.diseaseHistory[9],
+				upgrade1: game.upgradesList[0],
+				upgrade2: game.upgradesList[1],
+				upgrade3: game.upgradesList[2]				
+
 
 			});
 			game.scoreHistory.push(game.finalPoints);
@@ -523,28 +579,6 @@
 				game.readingTime +=Math.floor(((((new Date() - game.tempDate)/1000)/60)));
 				game.view.set({
 				upgrades: false
-				});
-			}
-		},
-
-		viewAnalysis: function( label ){
-
-			if(label == 1){
-			game.tempDate = new Date();
-			game.view.set({
-				analysis: true,
-				eatingRate: game.playerRatings.eatingRate,
-				averageCalories: game.playerRatings.averageCalories,
-				cursorDistance: game.playerRatings.cursorDistance,
-				exerciseRate: game.playerRatings.exerciseRate,
-				caloriesBurned: game.playerRatings.caloriesBurned,
-				scoreImprovement: game.playerRatings.scoreImprovement
-			});
-			//test( game.events );
-			}else{
-			game.readingTime += Math.floor(((((new Date() - game.tempDate)/1000)/60)));
-				game.view.set({
-				analysis: false
 				});
 			}
 		},
@@ -620,7 +654,7 @@
 			//log as distance travelled
 
 			for(var i = 0; i < array.length - 1; i++){
-				var value = Math.sqrt(Math.pow( (array[i].original.screenX - array[i + 1].original.screenX) , 2) + Math.pow( (array[i].original.screenY - array[i + 1].original.screenY) , 2) );
+				var value = Math.sqrt(Math.pow( (array[i].pageX - array[i + 1].pageX) , 2) + Math.pow( (array[i].pageY - array[i + 1].pageY) , 2) );
 				cursorDistance += value;
 
 			}

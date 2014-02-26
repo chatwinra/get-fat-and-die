@@ -45,6 +45,43 @@ p.instructions {
 	margin: 0 0 1em 0;
 }
 
+p.disease {
+	color: red;
+
+    -webkit-animation-name: disease;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    
+    -moz-animation-name: blinker;
+    -moz-animation-duration: 2s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: infinite;
+    
+    animation-name: blinker;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@-moz-keyframes disease {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@-webkit-keyframes disease {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@keyframes disease {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
 
 
 a {
@@ -61,8 +98,7 @@ a {
 
 button, .mate {
 	border: 1px solid #777777;
-	background: #386BF5;
-	color: white;
+	background: url(assets/images/exercise.jpg);
 	padding: 0.3em;
 	cursor: pointer;
 	border-radius: 0.3em;
@@ -71,9 +107,6 @@ button, .mate {
 
 }
 
-.mate {
-	display: inline;
-}
 
 .gameButton {
 	-moz-box-shadow:inset -1px 19px 31px -7px #97c4fe;
@@ -142,9 +175,19 @@ button, .mate {
 	@include border-box;
 }
 
+.diseaseTable{
+	color: red;
+	line-height: 1.5em;
+	display: inline-table;
+}
+
+.diseaseDescription {
+	width: 50%;
+	text-align: left;
+}
+
 @import "layout";
 @import "footer";
-@import "pending";
 @import "dialog";
 @import "header";
 @import "food";

@@ -1,3 +1,5 @@
+//don't need this scatter graph for now
+/*
 function test( array ){
 		var dataset = [];
 		for(var i = 0; i < array.length; i++){
@@ -7,12 +9,6 @@ function test( array ){
 
 			dataset.push(point);
 		}
-
-		/*var dataset = [
-							[5, 20], [480, 90], [250, 50], [100, 33], [330, 95],
-							[410, 12], [475, 44], [25, 67], [85, 21], [220, 88],
-							[600, 150]
-						  ];*/
 
 			//Width and height
 			var w = 500;
@@ -83,7 +79,7 @@ function test( array ){
 			   })
 			   .attr("font-family", "sans-serif")
 			   .attr("font-size", "11px")
-			   .attr("fill", "red");*/
+			   .attr("fill", "red");
 			
 			//Create X axis
 			svg.append("g")
@@ -112,6 +108,7 @@ function test( array ){
 		
 		
 };
+*/
 
 function barChart(){
 
